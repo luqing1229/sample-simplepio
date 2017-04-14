@@ -60,6 +60,7 @@ public class BoardDefaults {
         if (!sBoardVariant.isEmpty()) {
             return sBoardVariant;
         }
+
         sBoardVariant = Build.DEVICE;
         // For the edison check the pin prefix
         // to always return Edison Breakout pin name when applicable.
