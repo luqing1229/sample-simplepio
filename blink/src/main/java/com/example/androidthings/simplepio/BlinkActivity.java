@@ -24,6 +24,7 @@ import android.os.Handler;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Sample usage of the Gpio API that blinks an LED at a fixed interval defined in
@@ -47,6 +48,7 @@ public class BlinkActivity extends Activity {
         Log.i(TAG, "Starting BlinkActivity");
 
         PeripheralManagerService service = new PeripheralManagerService();
+
         try {
             String pinName = BoardDefaults.getGPIOForLED();
             mLedGpio = service.openGpio(pinName);
