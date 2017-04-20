@@ -78,6 +78,7 @@ public class ButtonActivity extends Activity {
         }
     };
 
+
     public void configureInput(Gpio gpio) throws IOException{
 
         // Initialize the pin as an input
