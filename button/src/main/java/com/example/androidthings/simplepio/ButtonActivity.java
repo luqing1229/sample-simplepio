@@ -22,6 +22,7 @@ import com.google.android.things.pio.GpioCallback;
 import com.google.android.things.pio.PeripheralManagerService;
 import android.os.Bundle;
 import android.util.Log;
+import android.webkit.GeolocationPermissions;
 
 import java.io.IOException;
 
@@ -43,16 +44,10 @@ public class ButtonActivity extends Activity {
         try {
             String pinName = BoardDefaults.getGPIOForButton();
             mButtonGpio = service.openGpio(pinName);
-            mButtonGpio.setDirection(Gpio.DIRECTION_IN);
-            mButtonGpio.setEdgeTriggerType(Gpio.EDGE_FALLING);
-            mButtonGpio.registerGpioCallback(new GpioCallback() {
-                @Override
-                public boolean onGpioEdge(Gpio gpio) {
-                    Log.i(TAG, "GPIO changed, button pressed");
-                    // Return true to continue listening to events
-                    return true;
-                }
-            });
+
+            //配置GPIO口为输入模式
+            configureInput(mButtonGpio);
+
         } catch (IOException e) {
             Log.e(TAG, "Error on PeripheralIO API", e);
         }
@@ -72,5 +67,24 @@ public class ButtonActivity extends Activity {
                 mButtonGpio = null;
             }
         }
+    }
+
+    private GpioCallback mGpioCallback = new GpioCallback() {
+        @Override
+        public boolean onGpioEdge(Gpio gpio) {
+            Log.i(TAG, "GPIO changed, button pressed");
+            // Return true to continue listening to events
+            return true;
+        }
+    };
+
+    public void configureInput(Gpio gpio) throws IOException{
+
+        // Initialize the pin as an input
+        mButtonGpio.setDirection(Gpio.DIRECTION_IN);
+
+        //Register for hign to low  state changes
+        mButtonGpio.setEdgeTriggerType(Gpio.EDGE_FALLING);
+        mButtonGpio.registerGpioCallback(mGpioCallback);
     }
 }
