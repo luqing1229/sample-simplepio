@@ -98,7 +98,6 @@ public class PWMActivity extends Activity {
                 Log.w(TAG, "Stopping runnable since mPwm is null");
                 return;
             }
-
             // Change the duration of the active PWM pulse, but keep it between the minimum and
             // maximum limits.
             // The direction of the change depends on the mIsPulseIncreasing variable, so the pulse
